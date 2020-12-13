@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.12
+# v0.12.17
 
 using Markdown
 using InteractiveUtils
@@ -198,19 +198,7 @@ philip
 typeof(philip)
 
 # ╔═╡ c9cd6c04-ebca-11ea-0990-5fa19ff7ed97
-RGBX(0.9, 0.1, 0.1)
-
-# ╔═╡ 0d873d9c-e93b-11ea-2425-1bd79677fb97
-md"##"
-
-# ╔═╡ 6b09354a-ebb9-11ea-2d5a-3b75c5ae7aa9
-
-
-# ╔═╡ 2d6c434e-e93b-11ea-2678-3b9db4975089
-md"##"
-
-# ╔═╡ 2b14e93e-e93b-11ea-25f1-5f565f80e778
-typeof(philip)
+RGBX(0.2, 0.1, 0.5)
 
 # ╔═╡ 0bdc6058-e8d5-11ea-1889-3f706cea7a1f
 md"""##
@@ -395,11 +383,30 @@ begin
 	[color, redify(color)]
 end
 
+# ╔═╡ 3c32efde-e938-11ea-1ae4-5d88290f5311
+redify.(philip)
+
+# ╔═╡ e85a9ef6-3d66-11eb-23ff-e9f098ddd3ec
+function sepia(c)
+	tr = 0.393 * c.r + 0.769 * c.g + 0.189 * c.b
+	tg = 0.349 * c.r + 0.686 * c.g + 0.168 * c.b
+	tb = 0.272 * c.r + 0.534 * c.g + 0.131 * c.b
+	
+	return RGB(tr, tg, tb)
+end
+
+# ╔═╡ f1456a78-3d66-11eb-0c3e-4960793e34d0
+begin
+	color_2 = RGB(0.9, 0.7, 0.2)
+	
+	[color_2, sepia(color_2)]
+end
+
 # ╔═╡ 98412a36-e93b-11ea-1954-f1c105c6ed4a
 md"##"
 
-# ╔═╡ 3c32efde-e938-11ea-1ae4-5d88290f5311
-redify.(philip)
+# ╔═╡ 06f95866-3d67-11eb-3765-d7b51a90c1e7
+sepia.(philip)
 
 # ╔═╡ 4b26e4e6-e938-11ea-2635-6d4fc15e13b7
 md"## Transforming an image
@@ -411,9 +418,6 @@ md"## Transforming an image
 
 
 
-# ╔═╡ c12e0928-e93b-11ea-0922-2b590a99ee89
-md"##"
-
 # ╔═╡ ff5dc538-e938-11ea-058f-693d6b016640
 md"## Experiments come alive with interaction
 
@@ -423,8 +427,54 @@ md"## Experiments come alive with interaction
 # ╔═╡ fa24f4a8-e93b-11ea-06bd-25c9672166d6
 md"##"
 
-# ╔═╡ 15ce202e-e939-11ea-2387-93be0ec4cf1f
-@bind repeat_count Slider(1:10, show_value=true)
+# ╔═╡ 3402e1e0-3d69-11eb-1733-cf3dbfd555d3
+convolve(2)
+
+# ╔═╡ 0fed352a-3d6a-11eb-1cb3-a97807480500
+md"""## A concrete first taste at abstraction
+"""
+
+# ╔═╡ 26587c16-3d6a-11eb-36b1-a53ead9a2d1c
+element = [1 2; 3 4]
+
+# ╔═╡ 2b6ef64e-3d6a-11eb-0386-df1291f96b9d
+fill(element, 3, 4)
+
+# ╔═╡ 30ebe294-3d6a-11eb-12af-7f6afca9588b
+typeof(element)
+
+# ╔═╡ 3ebe4812-3d6a-11eb-052f-598d9445217a
+keeptrack = [
+	typeof(1), 
+	typeof(1.0), 
+	typeof("one"), 
+	typeof(1//1), 
+	typeof(cute_one], 
+	typeof([1 2; 3 4])
+]
+
+# ╔═╡ 5998ea0e-3d6a-11eb-2d00-11dbca327a3e
+typeof(keeptrack)
+
+# ╔═╡ 5614b98c-3d70-11eb-06f5-8f4c9e3ade7d
+cute_one = load(download("http://www.clker.com/cliparts/F/K/7/n/j/m/dotty-one-hi.png"))
+
+# ╔═╡ f893c888-3d70-11eb-07e8-fd7ce404a27d
+md"""
+## Array Basics
+"""
+
+# ╔═╡ 02dafffa-3d71-11eb-0f3b-2b7a61ec503b
+v = [1,2,3,4]
+
+# ╔═╡ 10bc9886-3d71-11eb-0565-6d98b4ba2503
+A1 = string.(rand("654616548461", 3, 4)) |> pretty
+
+# ╔═╡ f19bf716-3d71-11eb-03e6-8f07bc1e66a8
+
+
+# ╔═╡ cfb90aa8-3d71-11eb-2740-974f29ba4eaa
+
 
 # ╔═╡ bf2167a4-e93d-11ea-03b2-cdd24b459ba9
 md"## Summary
@@ -445,8 +495,8 @@ extract_red(c) = c.r
 # ╔═╡ df1b7996-e93b-11ea-1a3a-81b4ec520679
 decimate(image, ratio=5) = image[1:ratio:end, 1:ratio:end]
 
-# ╔═╡ 41fa85c0-e939-11ea-1ad8-79805a2083bb
-poor_phil = decimate(head, 5)
+# ╔═╡ 2255e956-3d69-11eb-16f4-63f6260fdc5c
+poor_phil = decimate(head, 7)
 
 # ╔═╡ cd5721d0-ede6-11ea-0918-1992c69bccc6
 repeat(poor_phil, repeat_count, repeat_count)
@@ -665,7 +715,7 @@ function camera_input(;max_size=200, default_url="https://i.imgur.com/SUmi94P.pn
 end
 
 
-# ╔═╡ 9529bc40-e93c-11ea-2587-3186e0978476
+# ╔═╡ 7bc32766-3d63-11eb-38d7-1f2f88700ae0
 @bind raw_camera_data camera_input(;max_size=2000)
 
 # ╔═╡ 832ebd1a-e93c-11ea-1d18-d784f3184ebe
@@ -712,6 +762,15 @@ grant = decimate(process_raw_camera_data(raw_camera_data), 2)
 	grant[end:-1:1,:] grant[end:-1:1,end:-1:1]
 ]
 
+# ╔═╡ 3ac9ccea-3d74-11eb-2d67-a9f4e0e62f58
+1:999
+
+# ╔═╡ 15ce202e-e939-11ea-2387-93be0ec4cf1f
+@bind repeat_count Slider(1:10, show_value=true)
+
+# ╔═╡ 2a511d42-3d69-11eb-2ae5-23c1eb3e8e51
+@bind repeat_count Slider(1:10, show_value=true)
+
 # ╔═╡ Cell order:
 # ╟─a50b5f48-e8d5-11ea-1f05-a3741b5d15ba
 # ╟─8a6fed4c-e94b-11ea-1113-d56f56fb293b
@@ -728,7 +787,7 @@ grant = decimate(process_raw_camera_data(raw_camera_data), 2)
 # ╟─a0a97214-e8d2-11ea-0f46-0bfaf016ab6d
 # ╟─1697a756-e93d-11ea-0b6e-c9c78d527993
 # ╟─af28faca-ebb7-11ea-130d-0f94bf9bd836
-# ╠═9529bc40-e93c-11ea-2587-3186e0978476
+# ╠═7bc32766-3d63-11eb-38d7-1f2f88700ae0
 # ╟─ee1d1596-e94a-11ea-0fb4-cd05f62471d3
 # ╠═6aa73286-ede7-11ea-232b-63e052222ecd
 # ╠═9a843af8-e93c-11ea-311b-1bc6d5b58492
@@ -747,11 +806,7 @@ grant = decimate(process_raw_camera_data(raw_camera_data), 2)
 # ╠═7703b032-ebca-11ea-3074-0b80a077078e
 # ╠═7eff3522-ebca-11ea-1a65-59e66a4e72ab
 # ╠═c9cd6c04-ebca-11ea-0990-5fa19ff7ed97
-# ╟─0d873d9c-e93b-11ea-2425-1bd79677fb97
-# ╠═6b09354a-ebb9-11ea-2d5a-3b75c5ae7aa9
-# ╟─2d6c434e-e93b-11ea-2678-3b9db4975089
-# ╠═2b14e93e-e93b-11ea-25f1-5f565f80e778
-# ╟─0bdc6058-e8d5-11ea-1889-3f706cea7a1f
+# ╠═0bdc6058-e8d5-11ea-1889-3f706cea7a1f
 # ╠═e61db924-ebca-11ea-2f79-f9f1c121b7f5
 # ╠═ef60fcc4-ebca-11ea-3f69-155afffe8ea8
 # ╠═fac550ec-ebca-11ea-337a-dbc16848c617
@@ -785,23 +840,40 @@ grant = decimate(process_raw_camera_data(raw_camera_data), 2)
 # ╟─095ced62-e938-11ea-1169-939dc7136fd0
 # ╠═31f3605a-e938-11ea-3a6d-29a185bbee31
 # ╠═2744a556-e94f-11ea-2434-d53c24e59285
-# ╟─98412a36-e93b-11ea-1954-f1c105c6ed4a
 # ╠═3c32efde-e938-11ea-1ae4-5d88290f5311
+# ╠═e85a9ef6-3d66-11eb-23ff-e9f098ddd3ec
+# ╠═f1456a78-3d66-11eb-0c3e-4960793e34d0
+# ╟─98412a36-e93b-11ea-1954-f1c105c6ed4a
+# ╠═06f95866-3d67-11eb-3765-d7b51a90c1e7
 # ╟─4b26e4e6-e938-11ea-2635-6d4fc15e13b7
-# ╠═41fa85c0-e939-11ea-1ad8-79805a2083bb
-# ╟─c12e0928-e93b-11ea-0922-2b590a99ee89
+# ╠═2255e956-3d69-11eb-16f4-63f6260fdc5c
 # ╟─ff5dc538-e938-11ea-058f-693d6b016640
 # ╠═fbe11200-e938-11ea-12e9-6125c1b56b25
 # ╟─fa24f4a8-e93b-11ea-06bd-25c9672166d6
 # ╠═15ce202e-e939-11ea-2387-93be0ec4cf1f
 # ╠═cd5721d0-ede6-11ea-0918-1992c69bccc6
+# ╠═2a511d42-3d69-11eb-2ae5-23c1eb3e8e51
+# ╠═3402e1e0-3d69-11eb-1733-cf3dbfd555d3
+# ╠═0fed352a-3d6a-11eb-1cb3-a97807480500
+# ╠═26587c16-3d6a-11eb-36b1-a53ead9a2d1c
+# ╠═2b6ef64e-3d6a-11eb-0386-df1291f96b9d
+# ╠═30ebe294-3d6a-11eb-12af-7f6afca9588b
+# ╠═3ebe4812-3d6a-11eb-052f-598d9445217a
+# ╠═5998ea0e-3d6a-11eb-2d00-11dbca327a3e
+# ╠═5614b98c-3d70-11eb-06f5-8f4c9e3ade7d
+# ╠═f893c888-3d70-11eb-07e8-fd7ce404a27d
+# ╠═02dafffa-3d71-11eb-0f3b-2b7a61ec503b
+# ╠═10bc9886-3d71-11eb-0565-6d98b4ba2503
+# ╠═f19bf716-3d71-11eb-03e6-8f07bc1e66a8
+# ╠═cfb90aa8-3d71-11eb-2740-974f29ba4eaa
 # ╟─bf2167a4-e93d-11ea-03b2-cdd24b459ba9
-# ╟─5e688928-e939-11ea-0e16-fbc80af390ab
-# ╟─58184d88-e939-11ea-2fc8-73b3476ebe92
-# ╟─2dd09f16-e93a-11ea-2cdc-13f558e3391d
-# ╟─df1b7996-e93b-11ea-1a3a-81b4ec520679
+# ╠═5e688928-e939-11ea-0e16-fbc80af390ab
+# ╠═58184d88-e939-11ea-2fc8-73b3476ebe92
+# ╠═2dd09f16-e93a-11ea-2cdc-13f558e3391d
+# ╠═df1b7996-e93b-11ea-1a3a-81b4ec520679
 # ╟─b8daeea0-ec79-11ea-34b5-3f13e8a56a42
 # ╟─bf1bb2c8-ec79-11ea-0671-3ffb34828f3c
 # ╟─69e3aa82-e93c-11ea-23fe-c1103d989cba
 # ╟─739c3bb6-e93c-11ea-127b-efb6a8ab9379
 # ╟─832ebd1a-e93c-11ea-1d18-d784f3184ebe
+# ╠═3ac9ccea-3d74-11eb-2d67-a9f4e0e62f58
